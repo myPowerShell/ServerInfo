@@ -1,8 +1,7 @@
-The ServerInfo PowerShell Module should help Infrastructure teams by consolidating essential and frequently leveraged commands into comdlets <br/>
+# The ServerInfo PowerShell Module should help manage server infrastructure by consolidating essential and frequently leveraged commands into functions/comdlets <br/>
 
--This PowerShell module’s primary goal is to teach you how to design a custom module that aligns with all your environmental factors<br/>
 -This Repo equips you with the skills to create a tailored module that accommodates all your elements and distinctive requirements. <br/>
--The focus of this module is to help develop the knowledge and tools to build a module that fully integrates seamlessly <br/>
+-The focus of this module is to help develop the knowledge and tools to build and expand a module that fully integrates and adapts with changing needs <br/>
 
 # List of Functions in this Module: <br/>
 
