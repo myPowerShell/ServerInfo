@@ -1,4 +1,4 @@
-# The ServerInfo PowerShell Module should help manage server infrastructure by consolidating essential and frequently leveraged commands into functions/comdlets <br/>
+# The ServerInfo PowerShell Module <br/>
 
 -This Repo equips you with the skills to create a tailored module that accommodates all your elements and distinctive requirements. <br/>
 -The focus of this module is to help develop the knowledge and tools to build and expand a module that fully integrates and adapts with changing needs <br/>
