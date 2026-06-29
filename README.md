@@ -13,7 +13,7 @@ Get-Reboothistory <br/>
 Get-NICInfo    <br/>
 Restart-MyComputer  <br/>
 
-# General Example usage for most of the functions in this Module: <br/>
+# General Example usage for the functions <br/>
 
 1) Get-OSInfo <br/>
 2) Get-Content servers.txt | Get-OSInfo <br/>
