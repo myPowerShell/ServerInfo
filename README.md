@@ -8,7 +8,7 @@
 Get-OSInfo  <br/>
 Get-Uptime <br/>
 Get-DiskSpace   <br/>
-Get-Patchsummary  <br/>
+Get-OSUpdateSummary  <br/>
 Get-Reboothistory <br/>
 Get-NICInfo    <br/>
 Restart-MyComputer  <br/>

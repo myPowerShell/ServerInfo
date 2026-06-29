@@ -349,29 +349,29 @@ function Get-RebootHistory {
 
 
 
-function Get-PatchSummary {
+function Get-OSUpdateSummary {
 
     <#
 .Synopsis
-    This is a function to fetch recent patch summary
+    This is a function to fetch recent OSUpdate summary
 
 .DESCRIPTION
-    This is a function to fetch recent patch summary of a server or list of servers
+    This is a function to fetch recent OSUpdate summary of a server or list of servers
 
 .NOTE
 
-  File Name : Get-PatchSummary.ps1
+  File Name : Get-OSUpdateSummary.ps1
   Author    : myPowerShell
   Requires  : PowerShell 5
 
 .EXAMPLE
 
-    PS> Get-PatchSummary
-    Fetches patch summary of localhost
+    PS> Get-OSUpdateSummary
+    Fetches OSUPdate summary of localhost
 
 .EXAMPLE
 
-    PS>  Get-PatchSummary -ComputerName (get-content servers.txt) -DaysFromToday 40  |ft
+    PS>  Get-OSUpdateSummary -ComputerName (get-content servers.txt) -DaysFromToday 40  |ft
 
 .LINK
 
