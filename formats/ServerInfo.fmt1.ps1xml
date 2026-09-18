@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>Output Data Format</Name>
+            <ViewSelectedBy>
+                <TypeName>ServerInfo.Custom.Objectfmt1</TypeName>
+            </ViewSelectedBy>
+
+	<TableControl>
+          <TableHeaders>
+            <TableColumnHeader>
+              <Label>Machine</Label>
+            </TableColumnHeader>
+
+            <TableColumnHeader>
+              <Label>Status</Label>
+            </TableColumnHeader>
+
+            <TableColumnHeader>
+              <Label>Days</Label>
+            </TableColumnHeader>
+
+            <TableColumnHeader>
+              <Label>Hours</Label>
+            </TableColumnHeader>
+
+            <TableColumnHeader>
+              <Label>Minutesr</Label>
+            </TableColumnHeader>
+
+            <TableColumnHeader>
+             <Label>Seconds</Label>
+            </TableColumnHeader>
+           </TableHeaders>
+     
+          <TableRowEntries>
+            <TableRowEntry>
+              <TableColumnItems>
+
+                <TableColumnItem>
+                  <PropertyName>ComputerName</PropertyName>
+                </TableColumnItem>
+
+                  <TableColumnItem>
+                  <PropertyName>Status</PropertyName>
+                 </TableColumnItem>
+            	              
+                <TableColumnItem>
+                  <PropertyName>Days</PropertyName>
+                </TableColumnItem>
+
+                <TableColumnItem>
+                  <PropertyName>Hours</PropertyName>
+                </TableColumnItem>
+           	              
+                <TableColumnItem>
+                  <PropertyName>Minutes</PropertyName>
+                </TableColumnItem>
+                 <TableColumnItem>
+                  <PropertyName>Seconds</PropertyName>
+                </TableColumnItem>
+
+              </TableColumnItems>
+            </TableRowEntry>
+          </TableRowEntries>
+
+        </TableControl>
+
+	</View>
+    </ViewDefinitions>
+</Configuration>
