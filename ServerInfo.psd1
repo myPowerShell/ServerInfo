@@ -89,11 +89,10 @@
        'Public\Get-NutanixVMStorageReport.ps1',
        'Public\Get-NutanixDiskMapping.ps1',
        'Public\Get-SystemLogonLogoffReport.ps1'
-
     )
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport      = '*'
+    FunctionsToExport      = @('*')
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport        = @()
@@ -134,7 +133,7 @@
             # ReleaseNotes = ''
 
             # External dependent modules of this module
-            ExternalModuleDependencies = 'ActiveDirectory'
+            ExternalModuleDependencies = @('ActiveDirectory','MSCatalogLTS')
 
         } # End of PSData hashtable
 

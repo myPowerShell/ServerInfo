@@ -703,9 +703,9 @@ function Write-Log {
 } #End FUNCTION
 
 # Dot-source all Private .ps1 script files
-#  Get-ChildItem -Path "$PSScriptRoot\Private\*.ps1" | ForEach-Object {
-#     . $_.FullName
-#  }
+  Get-ChildItem -Path "$PSScriptRoot\Private\*.ps1" | ForEach-Object {
+     . $_.FullName
+  }
 
 # Explicitly export functions in Verb-Noun Format, this will exclude helper functions
 Export-ModuleMember -function *-*
