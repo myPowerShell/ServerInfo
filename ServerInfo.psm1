@@ -710,3 +710,5 @@ function Write-Log {
 # Explicitly export functions in Verb-Noun Format, this will exclude helper functions
 Export-ModuleMember -function *-*
 
+Export-ModuleMember -Function Get-ServerMetric -Alias Get-ServerMetricSample
+
