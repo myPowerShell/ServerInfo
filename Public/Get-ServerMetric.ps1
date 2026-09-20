@@ -1,4 +1,4 @@
-﻿Function Get-ServerMetrics {
+﻿Function Get-ServerMetric {
     [CmdletBinding()]
     param(
         [Parameter(
@@ -157,6 +157,6 @@
 
 <#
 
-Get-ServerMetrics -ComputerName (Get-Content "servers.txt") |  Export-Csv -Path "C:\Temp\ServerMetrics_$(Get-Date -Format "yyyyMMdd_HHmmss").csv" -NoTypeInformation
+Get-ServerMetric -ComputerName (Get-Content "servers.txt") |  Export-Csv -Path "C:\Temp\ServerMetric_$(Get-Date -Format "yyyyMMdd_HHmmss").csv" -NoTypeInformation
 
 #>

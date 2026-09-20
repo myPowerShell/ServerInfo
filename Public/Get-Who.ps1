@@ -111,7 +111,7 @@
 
         $Count = $Count + 1
         
-        $oresult = $Items |Select-Object SessionName, UserName, ID, State | ft  | Out-String
+        $oresult = $Items |Select-Object SessionName, UserName, ID, State | format-table  | Out-String
         WriteLog "Output: $oresult" -Severity INFO
         }# End foreach
 

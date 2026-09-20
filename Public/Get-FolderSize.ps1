@@ -22,7 +22,7 @@
 
         if ($ComputerName -as [ipaddress]){
         Write-Log "Detected IP Address and converting to HostName" -Severity INFO
-        $ComputerName = (Resolve-DnsName -Name $ComputerName|select NameHost).NameHost
+        $ComputerName = (Resolve-DnsName -Name $ComputerName|select-object NameHost).NameHost
         }
 
         if ($ComputerName -eq $Env:ComputerName){
@@ -91,8 +91,10 @@
     Write-Host "No Folders Found at this Path: $RemoteFolder" -ForegroundColor Red
     }else{
     Write-Log "Sorting results and presenting top 10 folders by Size" -Severity INFO
-    $oresult = $allresults | Sort-Object Size_GB -Descending | select-object Folder_Name, Size_GB -First 10 |ft  | Out-String
+    $oresult = $allresults | Sort-Object Size_GB -Descending | select-object Folder_Name, Size_GB -First 10 |format-table  | Out-String
     Write-Log "Output: $oresult" -Severity INFO
+    Write-Host "Sorting results and presenting top 10 folders by Size" -ForegroundColor Gray
+    Write-output $oresult
     }
 
     Write-Host "Script Execution Completed... Done!"  -ForegroundColor Green

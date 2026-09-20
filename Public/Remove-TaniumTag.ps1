@@ -1,5 +1,5 @@
-﻿function Remove-TaniumTag {
-    [CmdletBinding()]
+function Remove-TaniumTag {
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
     param(
         [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true)]
         [string[]]$ComputerName,
@@ -35,35 +35,40 @@
             return
         }
 
-        Write-Verbose "Removing tag from $($AllComputers.Count) servers..."
+        # Define the target summary and action details for ShouldProcess
+        $TargetDescription = "$($AllComputers.Count) servers (Ticket: $ChangeNumber)"
+        $ActionDescription = "Remove Tanium registry tag '$TagName'"
 
-        # Pass $TagName into the ArgumentList for the remote session
-        Invoke-Command -ComputerName $AllComputers -ArgumentList $TagName -ScriptBlock {
-            param($TagName)
-            
-            $Path = "HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client\Sensor Data\Tags"
-            
-            try {
-                if (Test-Path $Path) {
-                    # Check if the specific tag registry property exists before deleting
-                    if ((Get-ItemProperty -Path $Path -Name $TagName -ErrorAction SilentlyContinue)) {
-                        Remove-ItemProperty -Path $Path -Name $TagName -Force | Out-Null
-                        Write-Output "[$env:COMPUTERNAME] [Success] Tag '$TagName' removed successfully."
+        # ShouldProcess automatically handles -WhatIf and -Confirm prompts
+        if ($PSCmdlet.ShouldProcess($TargetDescription, $ActionDescription)) {
+            Write-Verbose "Removing tag from $TargetDescription..."
+
+            # Pass $TagName into the ArgumentList for the remote session
+            Invoke-Command -ComputerName $AllComputers -ArgumentList $TagName -ScriptBlock {
+                param($TagName)
+                
+                $Path = "HKLM:\SOFTWARE\WOW6432Node\Tanium\Tanium Client\Sensor Data\Tags"
+                
+                try {
+                    if (Test-Path $Path) {
+                        # Check if the specific tag registry property exists before deleting
+                        if (Get-ItemProperty -Path $Path -Name $TagName -ErrorAction SilentlyContinue) {
+                            Remove-ItemProperty -Path $Path -Path $Path -Name $TagName -Force | Out-Null
+                            Write-Output "[$env:COMPUTERNAME] [Success] Tag '$TagName' removed successfully."
+                        }
+                        else {
+                            Write-Output "[$env:COMPUTERNAME] [Info] Tag '$TagName' did not exist on this server."
+                        }
                     }
                     else {
-                        Write-Output "[$env:COMPUTERNAME] [Info] Tag '$TagName' did not exist on this server."
+                        Write-Error "[$env:COMPUTERNAME] [Error] Tanium Tags registry path not found."
                     }
                 }
-                else {
-                    Write-Output "[$env:COMPUTERNAME] [Info] Tanium tags path does not exist."
+                catch {
+                    Write-Error "[$env:COMPUTERNAME] [Exception] Failed to modify registry: $_"
                 }
-            }
-            catch {
-                Write-Error "[$env:COMPUTERNAME] [Error] Failed to remove tag. Details: $_"
             }
         }
     }
 }
-
-
 

@@ -6,10 +6,10 @@
         [Parameter(Mandatory = $true)]
         [String[]] $PrismCentral,
         
-        [Parameter(Mandatory = $true, HelpMessage="Enter your UserID")]
+        [Parameter(Mandatory = $true, HelpMessage = "Enter your UserID")]
         [String] $nxUser,
         
-        [Parameter(Mandatory = $true, HelpMessage="Enter your Password")]
+        [Parameter(Mandatory = $true, HelpMessage = "Enter your Password")]
         [ValidateNotNullOrEmpty()]
         [SecureString]$nxPassword,
 
@@ -81,8 +81,7 @@
 
                 $storageUsageBytes = $p.status.resources.storage_usage_bytes
                 if ($null -eq $storageUsageBytes) { $storageUsageBytes = 0 }
-                $totalUsedMiB = [Math]::Round(($storageUsageBytes / 1MB), 2)
-
+                
                 $allocatedMemoryMiB = $p.status.resources.memory_size_mib
                 if ($null -eq $allocatedMemoryMiB) { $allocatedMemoryMiB = 0 }
 
@@ -102,16 +101,16 @@
 
                 # Appending data to our cumulative Master list
                 $MasterResponse += [PSCustomObject]@{
-                     Prism_Central     =   $PC  # Visual tracking of origin
-                     Server            =   $p.spec.name
-                     Host_Name         =   $hostName
-                     CPUs              =   $p.spec.resources.num_sockets
-                     CPU_Cores         =   $p.spec.resources.num_vcpus_per_socket
-                     Memory_GiB        =   [Math]::Round(($allocatedMemoryMiB / 1024), 2)
-                     Power_State       =   $p.spec.resources.power_state
-                     DiskAllocatedGiB  =   [Math]::Round(($totalAllocatedMiB / 1024), 2)
-                     VM_UUID           =   $p.metadata.uuid
-                     Created           =   $p.metadata.creation_time
+                    Prism_Central    = $PC  # Visual tracking of origin
+                    Server           = $p.spec.name
+                    Host_Name        = $hostName
+                    CPUs             = $p.spec.resources.num_sockets
+                    CPU_Cores        = $p.spec.resources.num_vcpus_per_socket
+                    Memory_GiB       = [Math]::Round(($allocatedMemoryMiB / 1024), 2)
+                    Power_State      = $p.spec.resources.power_state
+                    DiskAllocatedGiB = [Math]::Round(($totalAllocatedMiB / 1024), 2)
+                    VM_UUID          = $p.metadata.uuid
+                    Created          = $p.metadata.creation_time
                 }
             }
 
@@ -125,7 +124,8 @@
     # Global filter logic using $ComputerName against the collected dataset
     if ($ComputerName) {
         $Report = $MasterResponse | Where-Object { $ComputerName -contains $_.Server }
-    } else {
+    }
+    else {
         $Report = $MasterResponse
     }
 
@@ -143,7 +143,8 @@
         Write-Host "Execution completed successfully! Report saved to: $OutputFile" -ForegroundColor Green
         
         # return $Report
-    } else {
+    }
+    else {
         Write-Warning "No virtual machine data matched your criteria."
     }
 }
