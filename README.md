@@ -1,6 +1,6 @@
 The ServerInfo PowerShell Module empowers Platform and Systems Engineering teams by consolidating essential daily commands into a single, high-impact function or functions. By embracing this re-usable framework, Engineers can significantly boost productivity, ensure predictable and repeatable results, and maintain a perfectly consistent configuration across digital Infrastructure <br/>
 
-- Maintain consistent function formats to enhance maintainability, simplicity <br/>
+- Maintain consistent function formats to enhance readability <br/>
 - Validated for use in Microsoft Windows Server 2016 and 2022 environments.  <br/>
 
 
@@ -13,10 +13,6 @@ The ServerInfo PowerShell Module empowers Platform and Systems Engineering teams
 1) Get-Uptime <br/>
 2) Get-Content servers.txt | Get-Uptime <br/>
 3) Get-Content servers.txt | Get-Uptime | Export-Csv C:\Temp\Get-Content_0626.csv <br/>
-
-
-### Private Functions:
-- Some private functions are excluded from this module
 
 
 #### Install ServerInfo Module from PowerShell Gallery:
@@ -71,7 +67,7 @@ Get-FolderSize -ComputerName localhost -Path "C:\Users" | format-Table -AutoSize
 
 ### Get Live Server Metrics:
 ```ps
-Get-ServerMetrics -ComputerName (Get-Content "Servers.txt") |  format-Table -AutoSize
+Get-ServerMetricsample -ComputerName (Get-Content "Servers.txt") |  format-Table -AutoSize
 
 ```
 ### Generate SSL Certificate report from select list of servers:

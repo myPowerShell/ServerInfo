@@ -12,7 +12,7 @@
     RootModule             = 'ServerInfo.psm1'
 
     # Version number of this module.
-    ModuleVersion          = '26.6.2'
+    ModuleVersion          = '26.6.3'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
