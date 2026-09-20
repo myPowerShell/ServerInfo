@@ -45,7 +45,7 @@ function Get-SSLCertReport {
 
     PROCESS {
         $User = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
-        WriteLog "Script Execution in Progress....for $User" -Severity INFO
+        Write-Log "Script Execution in Progress....for $User" -Severity INFO
         $Max = $ComputerName.Count
         $Count = 1
         
@@ -55,9 +55,9 @@ function Get-SSLCertReport {
             try {
                 Write-Verbose "-------------------------------"
                 Write-Verbose "Retrieving data from $Computer"
-                WriteLog ("Currently Processing Server: $Count " + "of " + $max + "  " + $Computer)
+                Write-Log ("Currently Processing Server: $Count " + "of " + $max + "  " + $Computer)
                 New-CimSession -ComputerName $Computer -ErrorAction Stop | out-null
-                WriteLog "Gathering SSL Cert Details from $Computer" -Severity INFO
+                Write-Log "Gathering SSL Cert Details from $Computer" -Severity INFO
            
                 if ($Env:ComputerName -eq $Computer) {
                     $certs = Get-ChildItem -Path "Cert:\LocalMachine\My" -Recurse | Select-Object NotAfter, Subject, Issuer
@@ -93,8 +93,8 @@ function Get-SSLCertReport {
             }
             catch {
                     
-                WriteLog $_.Exception.Message -Severity ERROR
-                WriteLog "Unable to connect via WinRM to this Server $Computer" -Severity ERROR
+                Write-Log $_.Exception.Message -Severity ERROR
+                Write-Log "Unable to connect via WinRM to this Server $Computer" -Severity ERROR
                 $Date = Get-Date -Format "yyyyMM_dd_HH_mmss"
                 $Properties = [Ordered] @{ ComputerName = $Computer
                     Status                              = "NotConnected"
@@ -115,7 +115,7 @@ function Get-SSLCertReport {
     } #End PROCESS    
          
     END {
-        WriteLog "Script Execution Completed" -Severity INFO
+        Write-Log "Script Execution Completed" -Severity INFO
     }
          
           
@@ -123,36 +123,5 @@ function Get-SSLCertReport {
 
 
 
-function WriteLog {
-      
-    Param(
-        [Parameter(Mandatory = $true)]
-        [string]$Message,
-        
-        [Parameter(Mandatory = $false)]
-        [ValidateSet('INFO', 'WARNING', 'ERROR')]
-        [string]$Severity = 'INFO'
-    )
-    
-    $CallStack = Get-PSCallStack
-    $CallingFunction = $CallStack[1].Command
 
-    if ($CallingFunction -eq '<ScriptBlock>') {
-        $CallingFunction = "Module_MainScript"
-    }
-    
-    $logDate = Get-Date -Format "yyyyMMdd"
-
-    $LogFolder = "C:\Temp\Logs"
-    if (-not (Test-Path $LogFolder)) { New-Item -ItemType Directory -Path $LogFolder | Out-Null }
-    $LogFile = Join-Path $LogFolder ("$CallingFunction" + "_" + $logDate + ".log")
-     
-    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    $LogLine = "[$Timestamp] [$Severity] $Message"
-     
-    # Append to the dedicated log file
-    $LogLine | Add-Content -Path $LogFile
-    # $LogLine | Tee-Object -FilePath $LogFile -Append
-              
-} #End Sub Function (WriteLog)
 

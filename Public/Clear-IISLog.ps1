@@ -40,14 +40,14 @@ This script will clear dated IIS Logs from server or servers by leaving logs tha
     $ADUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
     Write-output "Script execution in Progress...for $ADUser  Please wait!" 
     Write-output "You can check log for Status at C:\Temp\Logs on $Env:ComputerName" 
-    WriteLog "Script execution in Progress...for $ADUser  Please wait!"
+    Write-Log "Script execution in Progress...for $ADUser  Please wait!"
     $count = 1
     @(foreach ($Computer in $ComputerName) {
             $timestmp = Get-Date -Format "yyyy-MM-dd-hhmmss"
             $timestamp = $timestmp.ToString()
             $Computer = $Computer.trim()
             $cIISLogPath = $null
-            WriteLog ("Currently Processing Server: $Count " + "of " + $max + "  " + $Computer)
+            Write-Log ("Currently Processing Server: $Count " + "of " + $max + "  " + $Computer)
 
             if (New-CimSession -ComputerName $Computer -ErrorAction SilentlyContinue) {
                 
@@ -76,13 +76,13 @@ This script will clear dated IIS Logs from server or servers by leaving logs tha
                 }
                 Catch {
                 
-                    WriteLog "Encounterd errors while validating IIS on $Computer" -Severity ERROR
+                    Write-Log "Encounterd errors while validating IIS on $Computer" -Severity ERROR
                  
                 }
                       
                       
                 if ($null -eq $cIISLogPath) {
-                    WriteLog "Please validate IIS is installed on this Server $Computer" -Severity ERROR
+                    Write-Log "Please validate IIS is installed on this Server $Computer" -Severity ERROR
                     Write-Verbose "Please validate IIS is installed on this Server $Computer"
                     $count = $count + 1 
                    
@@ -166,7 +166,7 @@ This script will clear dated IIS Logs from server or servers by leaving logs tha
             }
             else {
 
-                WriteLog "Unable to connect to $Computer , Please check" -Severity ERROR
+                Write-Log "Unable to connect to $Computer , Please check" -Severity ERROR
                 $Properties = [Ordered] @{ ComputerName = $Computer
                     Status                              = "Unable_to_Connect"
                     Cleared_IIS_Log_Path                = $null
@@ -184,43 +184,12 @@ This script will clear dated IIS Logs from server or servers by leaving logs tha
       
         }) #End Foreach #1
 
-    WriteLog "Script Execution Completed, A log files will be created on each Server at C:\Temp\Logs with deleted file Names" -Severity INFO
+    Write-Log "Script Execution Completed, A log files will be created on each Server at C:\Temp\Logs with deleted file Names" -Severity INFO
     Write-output "" # Adding blank line to enhance on screen output view
     Write-output "Script Execution Completed, A log files will be created on each Server at C:\Temp\Logs with deleted file Names"
 
 } # End Function
 
 
-function WriteLog {
-      
-    Param(
-        [Parameter(Mandatory = $true)]
-        [string]$Message,
-        
-        [Parameter(Mandatory = $false)]
-        [ValidateSet('INFO', 'WARNING', 'ERROR')]
-        [string]$Severity = 'INFO'
-    )
-        
-    $CallStack = Get-PSCallStack
-    $CallingFunction = $CallStack[1].Command
 
-    if ($CallingFunction -eq '<ScriptBlock>') {
-        $CallingFunction = "Module_MainScript"
-    }
-    
-    $logDate = Get-Date -Format "yyyyMMdd"
-
-    $LogFolder = "C:\Temp\Logs"
-    if (-not (Test-Path $LogFolder)) { New-Item -ItemType Directory -Path $LogFolder | Out-Null }
-    $LogFile = Join-Path $LogFolder ("$CallingFunction" + "_" + $logDate + ".log")
-     
-    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    $LogLine = "[$Timestamp] [$Severity] $Message"
-     
-    # Append to the dedicated log file
-    $LogLine | Add-Content -Path $LogFile
-    # $LogLine | Tee-Object -FilePath $LogFile -Append
-              
-} #End FUNCTION
 

@@ -104,40 +104,7 @@ WriteLog "Script Execution Completed  On $Env:ComputerName by $ADUser" -Severity
 }
 
 
-function WriteLog{
-      
-      Param(
-        [Parameter(Mandatory = $true)]
-        [string]$Message,
-        
-        [Parameter(Mandatory = $false)]
-        [ValidateSet('INFO', 'WARNING', 'ERROR')]
-        [string]$Severity = 'INFO'
-    )
-    
-    
-    $CallStack = Get-PSCallStack
-    $CallingFunction = $CallStack[1].Command
 
-        if ($CallingFunction -eq '<ScriptBlock>') {
-        $CallingFunction = "ServerInfo_Module_Script"
-        }
-    
-
-    $logDate = Get-Date -Format "yyyyMMdd"
-
-
-    $LogFolder = "C:\Temp\Logs"
-    if (-not (Test-Path $LogFolder)) { New-Item -ItemType Directory -Path $LogFolder | Out-Null }
-    $LogFile = Join-Path $LogFolder ("$CallingFunction" +"_"+$logDate+".log")
-     
-     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-     $LogLine = "[$Timestamp] [$Severity] $Message"
-     
-    # Append to the dedicated log file
-    $LogLine | Tee-Object -FilePath $LogFile -Append
-              
-    } #End FUNCTION
 
 
 

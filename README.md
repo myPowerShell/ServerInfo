@@ -72,7 +72,7 @@ Get-ServerMetricsample -ComputerName (Get-Content "Servers.txt") |  format-Table
 ```
 ### Generate SSL Certificate report from select list of servers:
 ```ps
-Get-SSLCertReport -ComputerName (get-content win_allservers.txt)  | Select-Object ComputerName, Status, NotAfter, Subject, Issuer, DaysRemaining, TimeStamp | Export-Csv ("Get-SSLCertReport_$(Get-Date -Format "yyyyMMdd_HHmmss").csv") -NoTypeInformation
+Get-SSLCertReport -ComputerName (get-content ".\servers.txt")  | Select-Object ComputerName, Status, NotAfter, Subject, Issuer, DaysRemaining, TimeStamp | Export-Csv ("Get-SSLCertReport_$(Get-Date -Format "yyyyMMdd_HHmmss").csv") -NoTypeInformation
 
 ```
 ### Get Okta User by Email:
